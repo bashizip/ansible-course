@@ -5,6 +5,7 @@
   pre_tasks:
 
   - name: install updates for rhel
+    tags: always
     ansible.builtin.dnf:
       update_only: yes
       update_cache: yes
@@ -12,6 +13,7 @@
 
 
   - name: install updates for ubuntu
+    tags: always
     ansible.builtin.apt:
       upgrade: dist
       update_cache: yes
@@ -22,14 +24,16 @@
   tasks:
 
   - name: install apache on web servers
+    tags: apache,ubuntu
     ansible.builtin.apt:
-     name:
-      - apache2
-      - libapache2-mod-php
+      name:
+        - apache2
+        - libapache2-mod-php
     when: ansible_distribution == "Ubuntu"
 
 
 - hosts: db_servers
+  tags: db,rhel
   become: yes
   tasks:
 
